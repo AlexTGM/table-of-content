@@ -3,10 +3,8 @@ import {
   configureStore,
   PreloadedState,
 } from "@reduxjs/toolkit";
-import { TableOfContentSlice } from "..";
 
 const rootReducer = combineReducers({
-  [TableOfContentSlice.name]: TableOfContentSlice.reducer,
 });
 
 export function setupStore(preloadedState?: PreloadedState<RootState>) {

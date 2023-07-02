@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 import { useGetPagesQuery } from "../entities";
 import { Header, Article } from "../widgets";
+import { TableOfContentLoading } from "../../modules";
 
 export const KnowledgeBase = (): JSX.Element => {
   const props = useGetPagesQuery();
@@ -10,15 +11,13 @@ export const KnowledgeBase = (): JSX.Element => {
   const [searchParams] = useSearchParams();
   const pageId = searchParams.get("pageId");
 
-  console.log(props)
-
   return (
     <KnowledgeBaseContainer>
       <Header />
 
       <ContentContainer>
         <TableOfContentWrapper>
-          {props.isLoading && <p data-testid="isLoading">Is Loading...</p>}
+          {props.isLoading && <TableOfContentLoading />}
           {props.isSuccess && <p data-testid="loaded">Data Loaded</p>} 
         </TableOfContentWrapper>
 

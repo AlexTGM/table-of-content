@@ -57,7 +57,8 @@ describe("Table Of Content should", () => {
       </Router>, { store }
     );
 
-    expect(getByTestId("isLoading")).toHaveTextContent("Is Loading...");
+    expect(getByTestId("skeleton-0")).toBeVisible();
+    expect(getByTestId("skeleton-7")).toBeVisible();
 
     await waitFor(() =>
       expect(getByTestId("loaded")).toHaveTextContent("Data Loaded")
