@@ -11,7 +11,7 @@ import {
 export const ListItem = ({ itemPath }: { itemPath: string }) => {
   const [itemId] = useState(getNodeId(itemPath));
 
-  const { title } = useAppSelector((state: RootState) =>
+  const { title, level } = useAppSelector((state: RootState) =>
     selectNodeData(state, itemId)
   );
 
@@ -23,7 +23,7 @@ export const ListItem = ({ itemPath }: { itemPath: string }) => {
 
   return (
     <li key={itemId} data-testid={`list-item-${itemId}`} onClick={handleInteraction}>
-      <InteractiveTableOfContentNode>
+      <InteractiveTableOfContentNode $level={level + 1}>
         {isExpandable && <Expander isExpanded={isExpanded} />}
         {title}
       </InteractiveTableOfContentNode>
