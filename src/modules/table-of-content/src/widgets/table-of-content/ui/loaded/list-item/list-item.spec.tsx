@@ -1,3 +1,4 @@
+import { fireEvent, waitFor } from "@testing-library/react";
 import { ListItem } from ".";
 import { renderWithProviders } from "../../../../../shared";
 
@@ -6,9 +7,9 @@ describe("List Item should", () => {
     const node2 = { path: "2", children: [] };
     const node1 = { path: "1", children: [node2] };
 
-    const { baseElement } = renderWithProviders(<ListItem itemPath="1" />, {
+    const { baseElement, getByTestId } = renderWithProviders(<ListItem itemPath="1" />, {
       preloadedState: {
-        tree: {
+        treeState: {
           nodes: [node1, node2],
           rawData: {
             "1": {
@@ -32,5 +33,9 @@ describe("List Item should", () => {
 
     expect(baseElement).toHaveTextContent("Item #1");
     expect(baseElement).not.toHaveTextContent("Item #2");
+
+    fireEvent.click(getByTestId('list-item-1'));
+
+    waitFor(() => expect(baseElement).toHaveTextContent("Item #2"))
   });
 });
