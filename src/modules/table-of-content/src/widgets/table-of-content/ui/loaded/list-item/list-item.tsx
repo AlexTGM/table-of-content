@@ -1,7 +1,11 @@
 import { useState, useCallback } from "react";
 import { Expander } from "../../../../../../../ui-kit";
 import { selectNodeData } from "../../../../../entities";
-import { useExpandableItem, useSelectableItems } from "../../../../../features";
+import {
+  useExpandableItem,
+  usePathHighlighting,
+  useSelectableItems,
+} from "../../../../../features";
 import {
   getNodeId,
   useAppSelector,
@@ -18,9 +22,11 @@ export const ListItem = ({ itemPath }: { itemPath: string }) => {
   const { isExpanded, isExpandable, handleExpand } = useExpandableItem(itemId);
   const { selectedItemPath, handleSelect } = useSelectableItems(itemPath);
 
+  const highlightType = usePathHighlighting(selectedItemPath, itemPath);
+
   const handleInteraction = useCallback(() => {
     return isExpandable ? handleExpand() : handleSelect();
-  }, [handleExpand, handleSelect, isExpandable])
+  }, [handleExpand, handleSelect, isExpandable]);
 
   return (
     <li
@@ -29,8 +35,8 @@ export const ListItem = ({ itemPath }: { itemPath: string }) => {
       onClick={handleInteraction}
     >
       <InteractiveTableOfContentNode
-        $level={(level + 1)}
-        $highlightType={`${selectedItemPath === itemPath ? 'active' : 'none'}`}
+        $level={level + 1}
+        $highlightType={highlightType}
         data-testid={`div-item-${itemId}`}
       >
         {isExpandable && <Expander isExpanded={isExpanded} />}
