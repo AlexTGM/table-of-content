@@ -8,7 +8,6 @@ import { KnowledgeBase } from ".";
 import { setupStore } from "../app/store";
 import { PageApi } from "../entities";
 import { renderWithProviders } from "../shared";
-import { waitFor } from "@testing-library/react";
 
 global.fetch = fetch
 global.Headers = Headers
@@ -59,9 +58,5 @@ describe("Table Of Content should", () => {
 
     expect(getByTestId("skeleton-0")).toBeVisible();
     expect(getByTestId("skeleton-7")).toBeVisible();
-
-    await waitFor(() =>
-      expect(getByTestId("loaded")).toHaveTextContent("Data Loaded")
-    );
   });
 });

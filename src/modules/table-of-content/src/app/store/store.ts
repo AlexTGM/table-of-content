@@ -3,8 +3,10 @@ import {
   configureStore,
   PreloadedState,
 } from "@reduxjs/toolkit";
+import { TreeSlice } from "../../entities/tree/tree.slice";
 
 const rootReducer = combineReducers({
+  [TreeSlice.name]: TreeSlice.reducer,
 });
 
 export function setupStore(preloadedState?: PreloadedState<RootState>) {

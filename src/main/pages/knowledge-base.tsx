@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { useGetPagesQuery } from "../entities";
 import { Header, Article } from "../widgets";
-import { TableOfContentLoading } from "../../modules";
+import { TableOfContentLoadedWidget, TableOfContentLoading } from "../../modules";
 
 export const KnowledgeBase = (): JSX.Element => {
   const props = useGetPagesQuery();
@@ -18,7 +18,7 @@ export const KnowledgeBase = (): JSX.Element => {
       <ContentContainer>
         <TableOfContentWrapper>
           {props.isLoading && <TableOfContentLoading />}
-          {props.isSuccess && <p data-testid="loaded">Data Loaded</p>} 
+          {props.isSuccess && <TableOfContentLoadedWidget inputData={props.data} />} 
         </TableOfContentWrapper>
 
         <Article pageId={pageId} />

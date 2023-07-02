@@ -1,1 +1,2 @@
-export * from "./loading/table-of-content.loading";
+export * from "./loaded";
+export * from "./loading";
