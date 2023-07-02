@@ -7,7 +7,7 @@ const initialState: TreeSliceState = {
 };
 
 export const TreeSlice = createSlice({
-  name: "tree",
+  name: "treeState",
   initialState,
   reducers: {
     setRootNodes: (state, { payload }: PayloadAction<TreeNode[]>) => {
@@ -19,7 +19,7 @@ export const TreeSlice = createSlice({
   },
 });
 
-export const selectTreeState = (state: RootState) => state.tree;
+export const selectTreeState = (state: RootState) => state.treeState;
 
 export const selectRootNodes = createSelector(
   selectTreeState,
@@ -29,4 +29,9 @@ export const selectRootNodes = createSelector(
 export const selectRawData = createSelector(
   selectTreeState,
   (state) => state.rawData
+);
+
+export const selectNodeData = createSelector(
+  [selectRawData, (_, nodeId: string) => nodeId],
+  (data, nodeId) => data[nodeId]
 );

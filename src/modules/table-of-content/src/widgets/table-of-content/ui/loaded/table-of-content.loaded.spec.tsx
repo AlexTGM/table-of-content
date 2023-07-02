@@ -31,6 +31,6 @@ describe("Table Of Content Loaded should", () => {
       <TableOfContentLoaded inputData={inputData} />
     );
 
-    expect(baseElement).toHaveTextContent('123');
+    expect(baseElement).toHaveTextContent('Item #1');
   });
 });

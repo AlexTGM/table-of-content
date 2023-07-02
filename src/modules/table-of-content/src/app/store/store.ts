@@ -4,9 +4,11 @@ import {
   PreloadedState,
 } from "@reduxjs/toolkit";
 import { TreeSlice } from "../../entities/tree/tree.slice";
+import { ExpandableItemsSlice } from "../../features/use-expandable-items";
 
 const rootReducer = combineReducers({
   [TreeSlice.name]: TreeSlice.reducer,
+  [ExpandableItemsSlice.name]: ExpandableItemsSlice.reducer,
 });
 
 export function setupStore(preloadedState?: PreloadedState<RootState>) {
