@@ -5,12 +5,14 @@ import {
 } from "@reduxjs/toolkit";
 import { TreeSlice } from "../../entities/tree/tree.slice";
 import { ExpandableItemsSlice } from "../../features/use-expandable-items";
-import { SelectableItemSlice } from "../../features/use-selectable-items";
+import { SelectableItemsSlice } from "../../features/use-selectable-items";
+import { FilterItemsSlice } from "../../features/use-filter-items/filter-items.slice";
 
 const rootReducer = combineReducers({
   [TreeSlice.name]: TreeSlice.reducer,
   [ExpandableItemsSlice.name]: ExpandableItemsSlice.reducer,
-  [SelectableItemSlice.name]: SelectableItemSlice.reducer,
+  [SelectableItemsSlice.name]: SelectableItemsSlice.reducer,
+  [FilterItemsSlice.name]: FilterItemsSlice.reducer,
 });
 
 export function setupStore(preloadedState?: PreloadedState<RootState>) {

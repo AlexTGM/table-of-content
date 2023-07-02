@@ -2,36 +2,7 @@ import { fireEvent } from "@testing-library/react";
 import { ListItem } from ".";
 import { renderWithProviders } from "../../../../../shared";
 import "jest-styled-components";
-
-const node3 = { path: "3", children: [] };
-const node2 = { path: "2", children: [node3] };
-const node1 = { path: "1", children: [node2] };
-
-const preloadedState = {
-  treeState: {
-    nodes: [node1, node2],
-    rawData: {
-      "1": {
-        title: "Item #1",
-        parentId: "ij",
-        pages: ["2"],
-        level: 0,
-      },
-      "2": {
-        title: "Item #2",
-        parentId: "1",
-        pages: ["3"],
-        level: 1,
-      },
-      "3": {
-        title: "Item #1",
-        parentId: "2",
-        pages: [],
-        level: 2,
-      },
-    },
-  },
-};
+import { preloadedState } from "../../../../../shared/tests/state-mock";
 
 describe("List Item should", () => {
   it("render", () => {

@@ -1,17 +1,20 @@
-import { selectRootNodes } from "../../../../../entities";
-import { List, useAppSelector } from "../../../../../shared";
+import { useFilterItems } from "../../../../../features";
+import { List, TableOfContentNode } from "../../../../../shared";
 import { ListItem, useListItems } from "../list-item";
 
 export const TableOfContentsList = () => {
-  const rootNodes = useAppSelector(selectRootNodes);
-
+  const rootNodes = useFilterItems();
   const listItems = useListItems(rootNodes);
 
   return (
     <List>
-      {listItems.map((listItem) => (
-        <ListItem itemPath={listItem} key={listItem} />
-      ))}
+      {rootNodes.length === 0 ? (
+        <TableOfContentNode>Please adjust filters</TableOfContentNode>
+      ) : (
+        listItems.map((listItem) => (
+          <ListItem itemPath={listItem} key={listItem} />
+        ))
+      )}
     </List>
   );
 };

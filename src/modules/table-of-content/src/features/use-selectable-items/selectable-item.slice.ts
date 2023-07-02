@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-export const SelectableItemSlice = createSlice({
+export const SelectableItemsSlice = createSlice({
   name: "selectedState",
   initialState: { path: "" },
   reducers: {
