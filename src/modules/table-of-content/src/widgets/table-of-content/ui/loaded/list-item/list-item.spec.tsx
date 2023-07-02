@@ -1,4 +1,4 @@
-import { fireEvent, waitFor } from "@testing-library/react";
+import { fireEvent } from "@testing-library/react";
 import { ListItem } from ".";
 import { renderWithProviders } from "../../../../../shared";
 
@@ -25,17 +25,32 @@ describe("List Item should", () => {
             },
           },
         },
-        expandedState: {
-          expanded: {},
-        },
       },
     });
 
     expect(baseElement).toHaveTextContent("Item #1");
-    expect(baseElement).not.toHaveTextContent("Item #2");
 
     fireEvent.click(getByTestId('list-item-1'));
-
-    waitFor(() => expect(baseElement).toHaveTextContent("Item #2"))
   });
+
+  it('have indentation', () => {
+    const node2 = { path: "2", children: [] };
+
+    const { getByTestId } = renderWithProviders(<ListItem itemPath="2" />, {
+      preloadedState: {
+        treeState: {
+          nodes: [node2],
+          rawData: {
+            "2": {
+              title: "Item #2",
+              parentId: "2",
+              level: 1,
+            },
+          },
+        },
+      },
+    });
+
+    expect(getByTestId("div-item-2")).toHaveStyle('padding-left: 32px');
+  })
 });

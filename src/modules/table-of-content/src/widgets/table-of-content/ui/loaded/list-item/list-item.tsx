@@ -22,8 +22,15 @@ export const ListItem = ({ itemPath }: { itemPath: string }) => {
   }, [handleExpand, isExpandable]);
 
   return (
-    <li key={itemId} data-testid={`list-item-${itemId}`} onClick={handleInteraction}>
-      <InteractiveTableOfContentNode $level={level + 1}>
+    <li
+      key={itemId}
+      data-testid={`list-item-${itemId}`}
+      onClick={handleInteraction}
+    >
+      <InteractiveTableOfContentNode
+        data-testid={`div-item-${itemId}`}
+        style={{ paddingLeft: (level + 1) * 16 }}
+      >
         {isExpandable && <Expander isExpanded={isExpanded} />}
         {title}
       </InteractiveTableOfContentNode>
