@@ -1,9 +1,10 @@
+import React from "react";
 import { useState, useCallback, useEffect } from "react";
 import { useAppDispatch, useDebounce } from "../../shared";
 import { FilterItemsSlice } from "./filter-items.slice";
 import { FilterWrapper, StyledInput } from "../../../../ui-kit";
 
-export const FilterInput = () => {
+export const FilterInput = React.memo(() => {
   const dispatch = useAppDispatch();
 
   const [inputValue, setInputValue] = useState<string>("");
@@ -27,4 +28,4 @@ export const FilterInput = () => {
       />
     </FilterWrapper>
   );
-};
+});

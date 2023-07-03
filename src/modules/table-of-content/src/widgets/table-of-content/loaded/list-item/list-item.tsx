@@ -13,6 +13,13 @@ import {
 } from "../../../../shared";
 import React from "react";
 
+const useKeyboardNavigation = (actions: Record<string, () => void>) => {
+  return useCallback(
+    (e: React.KeyboardEvent<HTMLDivElement>) => actions[e.code]?.(),
+    [actions]
+  );
+};
+
 export const ListItem = React.memo(({ itemPath }: { itemPath: string }) => {
   const itemId = getNodeId(itemPath);
 
@@ -20,21 +27,15 @@ export const ListItem = React.memo(({ itemPath }: { itemPath: string }) => {
     selectNodeData(state, itemId)
   );
 
+  const highlightType = usePathHighlighting(itemPath);
   const { isExpanded, isExpandable, handleExpand } = useExpandableItem(itemId);
-  const { selectedItemPath, handleSelect } = useSelectableItems(itemPath);
-
-  const highlightType = usePathHighlighting(selectedItemPath, itemPath);
+  const { handleSelect } = useSelectableItems(itemPath);
 
   const handleInteraction = useCallback(() => {
     return isExpandable ? handleExpand() : handleSelect();
   }, [handleExpand, handleSelect, isExpandable]);
 
-  const handleKeyDown = useCallback(
-    (e: React.KeyboardEvent<HTMLDivElement>) => {
-      if (e.code === "Enter") handleInteraction();
-    },
-    [handleInteraction]
-  );
+  const handleKeyDown = useKeyboardNavigation({ Enter: handleInteraction });
 
   return (
     <li

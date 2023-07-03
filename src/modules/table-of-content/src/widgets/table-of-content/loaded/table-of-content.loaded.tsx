@@ -8,20 +8,24 @@ import {
   FilterInput,
 } from "../../../features";
 import { useAppSelector, getNodeId } from "../../../shared";
+import React from "react";
 
-export const TableOfContentLoaded = ({
-  inputData,
-  selectedPageId,
-  onSelect,
-}: TableOfContentProps) => {
-  useTableOfContentInit(inputData);
-  useSelectedStateRestore(selectedPageId);
-
+const useSelectedPathUpdate = (onSelect: (selectedPageId: string) => void) => {
   const selectedPath = useAppSelector(selectSelectedItemPath);
 
   useEffect(() => {
     selectedPath && onSelect(getNodeId(selectedPath));
   }, [onSelect, selectedPath]);
+}
+
+export const TableOfContentLoaded = React.memo(({
+  inputData,
+  selectedPageId,
+  onSelect,
+}: TableOfContentProps) => {
+  useSelectedPathUpdate(onSelect);
+  useTableOfContentInit(inputData);
+  useSelectedStateRestore(selectedPageId);
 
   return (
     <>
@@ -29,4 +33,4 @@ export const TableOfContentLoaded = ({
       <TableOfContentsList />
     </>
   );
-};
+});
