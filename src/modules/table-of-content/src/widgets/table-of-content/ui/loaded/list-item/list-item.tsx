@@ -28,6 +28,13 @@ export const ListItem = ({ itemPath }: { itemPath: string }) => {
     return isExpandable ? handleExpand() : handleSelect();
   }, [handleExpand, handleSelect, isExpandable]);
 
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLDivElement>) => {
+      if (e.code === "Enter") handleInteraction();
+    },
+    [handleInteraction]
+  );
+
   return (
     <li
       key={itemId}
@@ -35,6 +42,8 @@ export const ListItem = ({ itemPath }: { itemPath: string }) => {
       onClick={handleInteraction}
     >
       <InteractiveTableOfContentNode
+        tabIndex={2}
+        onKeyDown={handleKeyDown}
         $level={level + 1}
         $highlightType={highlightType}
         data-testid={`div-item-${itemId}`}

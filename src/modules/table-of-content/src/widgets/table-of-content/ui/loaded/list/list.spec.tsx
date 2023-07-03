@@ -1,4 +1,4 @@
-import { fireEvent } from "@testing-library/react";
+import { act, fireEvent } from "@testing-library/react";
 import { TableOfContentsList } from ".";
 import { renderWithProviders } from "../../../../../shared";
 import { preloadedState } from "../../../../../shared/tests/state-mock";
@@ -9,8 +9,8 @@ describe("List should", () => {
       preloadedState,
     });
 
-    fireEvent.click(getByTestId("list-item-1"));
-    fireEvent.click(getByTestId("list-item-2"));
+    act(() => fireEvent.click(getByTestId("list-item-1")));
+    act(() => fireEvent.click(getByTestId("list-item-2")));
 
     expect(getByTestId("list-item-3")).toBeVisible();
   });
@@ -26,8 +26,8 @@ describe("List should", () => {
       }
     );
 
-    fireEvent.click(getByTestId("list-item-1"));
-    fireEvent.click(getByTestId("list-item-2"));
+    act(() => fireEvent.click(getByTestId("list-item-1")));
+    act(() => fireEvent.click(getByTestId("list-item-2")));
 
     expect(queryByTestId("list-item-3")).toBeNull();
   });

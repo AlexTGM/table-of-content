@@ -1,4 +1,4 @@
-import { fireEvent } from "@testing-library/react";
+import { act, fireEvent } from "@testing-library/react";
 import { ListItem } from ".";
 import { renderWithProviders } from "../../../../../shared";
 import "jest-styled-components";
@@ -15,7 +15,7 @@ describe("List Item should", () => {
 
     expect(baseElement).toHaveTextContent("Item #1");
 
-    fireEvent.click(getByTestId("list-item-1"));
+    act(() => fireEvent.click(getByTestId("list-item-1")));
 
     expect(getByTestId("div-item-1")).not.toHaveStyleRule(
       "background-color",
@@ -46,7 +46,7 @@ describe("List Item should", () => {
       preloadedState,
     });
 
-    fireEvent.click(getByTestId("div-item-3"));
+    act(() => fireEvent.click(getByTestId("div-item-3")));
 
     expect(getByTestId("div-item-3")).toHaveStyleRule(
       "background-color",
