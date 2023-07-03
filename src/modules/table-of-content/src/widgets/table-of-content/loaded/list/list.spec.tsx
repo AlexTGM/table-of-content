@@ -31,4 +31,22 @@ describe("List should", () => {
 
     expect(queryByTestId("list-item-3")).toBeNull();
   });
+
+  it('render no items text when list is empty', () => {
+    const { queryAllByTestId } = renderWithProviders(
+      <TableOfContentsList />,
+      {
+        preloadedState: {
+          ...preloadedState,
+          filterState: { filterValue: "non-existing" },
+        },
+      }
+    );
+
+    const matchingElements = queryAllByTestId((value) =>
+      value.startsWith("list-item")
+    );
+
+    expect(matchingElements.length).toBe(0);
+  })
 });
