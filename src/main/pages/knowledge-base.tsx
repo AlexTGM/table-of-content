@@ -3,13 +3,24 @@ import styled from "styled-components";
 
 import { useGetPagesQuery } from "../entities";
 import { Header, Article } from "../widgets";
-import { TableOfContentLoadedWidget, TableOfContentLoading } from "../../modules";
+import { useCallback } from "react";
+import {
+  TableOfContentLoadedState,
+  TableOfContentLoadingState,
+} from "../../modules";
 
 export const KnowledgeBase = (): JSX.Element => {
   const props = useGetPagesQuery();
 
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const pageId = searchParams.get("pageId");
+
+  const handleChange = useCallback(
+    (selectedPageId: string) => {
+      setSearchParams({ pageId: selectedPageId });
+    },
+    [setSearchParams]
+  );
 
   return (
     <KnowledgeBaseContainer>
@@ -17,8 +28,14 @@ export const KnowledgeBase = (): JSX.Element => {
 
       <ContentContainer>
         <TableOfContentWrapper>
-          {props.isLoading && <TableOfContentLoading />}
-          {props.isSuccess && <TableOfContentLoadedWidget inputData={props.data} />} 
+          {props.isLoading && <TableOfContentLoadingState />}
+          {props.isSuccess && (
+            <TableOfContentLoadedState
+              inputData={props.data}
+              onSelect={handleChange}
+              selectedPageId={pageId}
+            />
+          )}
         </TableOfContentWrapper>
 
         <Article pageId={pageId} />

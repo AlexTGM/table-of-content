@@ -15,4 +15,6 @@ export type InputData = {
 
 export interface TableOfContentProps {
   inputData: InputData;
+  selectedPageId: string | null;
+  onSelect: (selectedPageId: string) => void;
 }

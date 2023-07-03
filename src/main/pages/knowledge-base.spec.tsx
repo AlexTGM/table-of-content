@@ -8,6 +8,7 @@ import { KnowledgeBase } from ".";
 import { setupStore } from "../app/store";
 import { PageApi } from "../entities";
 import { renderWithProviders } from "../shared";
+import { waitFor } from "@testing-library/react";
 
 global.fetch = fetch
 global.Headers = Headers
@@ -59,4 +60,16 @@ describe("Table Of Content should", () => {
     expect(getByTestId("skeleton-0")).toBeVisible();
     expect(getByTestId("skeleton-7")).toBeVisible();
   });
+
+  it("show expanded item after restoring state", () => {
+    const history = createMemoryHistory();
+
+    const { getByText } = renderWithProviders(
+      <Router location={history.location} navigator={history}>
+        <KnowledgeBase />
+      </Router>, { store }
+    );
+
+    waitFor(() => expect(getByText("Item #3")).toBeVisible());
+  })
 });
