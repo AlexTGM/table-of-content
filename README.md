@@ -1,10 +1,11 @@
 To build the application:
 
 1. Install all dependencies for server (src/server) application `npm/pnpm/yarn i`
-2. Run the json-server `npm/pnpm/yarn start`
+2. Run the json-server `node server.js`
 3. Install all dependencies for main (src) application `npm/pnpm/yarn i`
-4. Run the dev server `npm/pnpm/yarn preview`
-5. To run tests `npm/pnpm/yarn test` can be used
+4. Build production dist `npm/pnpm/yarn build`
+5. Run the dev server `npm/pnpm/yarn preview`
+6. To run tests `npm/pnpm/yarn test` can be used
 
 The application contains:
 
