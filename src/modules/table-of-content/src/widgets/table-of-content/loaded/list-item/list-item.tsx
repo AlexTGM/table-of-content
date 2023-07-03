@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useCallback } from "react";
 import { Expander } from "../../../../../../ui-kit";
 import { selectNodeData } from "../../../../entities";
 import {
@@ -11,9 +11,10 @@ import {
   useAppSelector,
   InteractiveTableOfContentNode,
 } from "../../../../shared";
+import React from "react";
 
-export const ListItem = ({ itemPath }: { itemPath: string }) => {
-  const [itemId] = useState(getNodeId(itemPath));
+export const ListItem = React.memo(({ itemPath }: { itemPath: string }) => {
+  const itemId = getNodeId(itemPath);
 
   const { title, level } = useAppSelector((state: RootState) =>
     selectNodeData(state, itemId)
@@ -53,4 +54,4 @@ export const ListItem = ({ itemPath }: { itemPath: string }) => {
       </InteractiveTableOfContentNode>
     </li>
   );
-};
+});
