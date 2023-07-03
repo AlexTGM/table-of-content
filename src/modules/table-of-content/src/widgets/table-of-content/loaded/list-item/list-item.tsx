@@ -1,16 +1,16 @@
 import { useState, useCallback } from "react";
-import { Expander } from "../../../../../../../ui-kit";
-import { selectNodeData } from "../../../../../entities";
+import { Expander } from "../../../../../../ui-kit";
+import { selectNodeData } from "../../../../entities";
 import {
   useExpandableItem,
-  usePathHighlighting,
   useSelectableItems,
-} from "../../../../../features";
+  usePathHighlighting,
+} from "../../../../features";
 import {
   getNodeId,
   useAppSelector,
   InteractiveTableOfContentNode,
-} from "../../../../../shared";
+} from "../../../../shared";
 
 export const ListItem = ({ itemPath }: { itemPath: string }) => {
   const [itemId] = useState(getNodeId(itemPath));

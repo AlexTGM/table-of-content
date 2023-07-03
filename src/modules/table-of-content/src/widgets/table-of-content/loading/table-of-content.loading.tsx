@@ -1,7 +1,6 @@
 import styled from "styled-components";
-
-import { TextShimmer } from "../../../../../../ui-kit";
-import { List, TableOfContentNode } from "../../../../shared";
+import { TextShimmer } from "../../../../../ui-kit";
+import { List, TableOfContentNode } from "../../../shared";
 
 const LoadingStateStyled = styled(List)`
   margin-top: 42px;

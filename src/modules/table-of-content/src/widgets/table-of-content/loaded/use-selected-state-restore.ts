@@ -1,7 +1,7 @@
 import { useEffect } from "react";
-import { selectRawData } from "../../../../entities";
-import { ExpandableItemsSlice, SelectableItemsSlice } from "../../../../features";
-import { useAppDispatch, useAppSelector, joinPath } from "../../../../shared";
+import { selectRawData } from "../../../entities";
+import { ExpandableItemsSlice, SelectableItemsSlice } from "../../../features";
+import { useAppDispatch, useAppSelector, joinPath } from "../../../shared";
 
 export const useSelectedStateRestore = (selectedPageId: string | null) => {
   const dispatch = useAppDispatch();

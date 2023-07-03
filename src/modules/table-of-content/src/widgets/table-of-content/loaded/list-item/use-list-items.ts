@@ -1,7 +1,7 @@
 import { useMemo } from "react";
-import { TreeNode } from "../../../../../entities";
-import { selectExpandedState } from "../../../../../features";
-import { useAppSelector, getNodeId } from "../../../../../shared";
+import { TreeNode } from "../../../../entities";
+import { selectExpandedState } from "../../../../features";
+import { useAppSelector, getNodeId } from "../../../../shared";
 
 export const useListItems = (rootNodes: TreeNode[]): string[] => {
   const expandedState = useAppSelector(selectExpandedState);

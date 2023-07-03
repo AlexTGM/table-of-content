@@ -1,13 +1,13 @@
 import { useEffect } from "react";
-import {
-  FilterInput,
-  TableOfContentProps,
-  selectSelectedItemPath,
-  useTableOfContentInit,
-} from "../../../../features";
-import { useAppSelector, getNodeId } from "../../../../shared";
 import { TableOfContentsList } from "./list";
 import { useSelectedStateRestore } from "./use-selected-state-restore";
+import {
+  TableOfContentProps,
+  useTableOfContentInit,
+  selectSelectedItemPath,
+  FilterInput,
+} from "../../../features";
+import { useAppSelector, getNodeId } from "../../../shared";
 
 export const TableOfContentLoaded = ({
   inputData,
@@ -26,7 +26,7 @@ export const TableOfContentLoaded = ({
   return (
     <>
       <FilterInput />
-      <TableOfContentsList />;
+      <TableOfContentsList />
     </>
   );
 };

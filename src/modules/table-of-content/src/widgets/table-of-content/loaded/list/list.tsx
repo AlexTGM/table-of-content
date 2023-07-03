@@ -1,5 +1,5 @@
-import { useFilterItems } from "../../../../../features";
-import { List, TableOfContentNode } from "../../../../../shared";
+import { useFilterItems } from "../../../../features";
+import { List, TableOfContentNode } from "../../../../shared";
 import { ListItem, useListItems } from "../list-item";
 
 export const TableOfContentsList = () => {
