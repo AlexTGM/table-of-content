@@ -4,6 +4,7 @@ To build the application:
 2. Run the json-server `npm/pnpm/yarn start`
 3. Install all dependencies for main (src) application `npm/pnpm/yarn i`
 4. Run the dev server `npm/pnpm/yarn preview`
+5. To run tests `npm/pnpm/yarn test` can be used
 
 The application contains:
 
