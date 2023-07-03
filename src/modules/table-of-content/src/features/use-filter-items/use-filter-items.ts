@@ -16,7 +16,10 @@ export const filter = (
   const getNodes = (result: TreeNode[], node: TreeNode): TreeNode[] => {
     const nodeId = getNodeId(node.path);
 
-    if (rawData[nodeId].title.includes(filterValue)) {
+    const filterValueLowered = filterValue.toLowerCase();
+    const nodeValueLowered = rawData[nodeId].title.toLowerCase();
+
+    if (nodeValueLowered.includes(filterValueLowered)) {
       result.push(node);
       return result;
     }
