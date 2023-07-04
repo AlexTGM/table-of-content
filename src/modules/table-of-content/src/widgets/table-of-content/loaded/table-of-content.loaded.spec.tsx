@@ -1,5 +1,5 @@
 import { TableOfContentLoaded } from ".";
-import { renderWithProviders } from "../../../shared";
+import { renderWithProviders } from "../../../shared/tests";
 
 describe("Table Of Content Loaded should", () => {
   it("render all elements", () => {

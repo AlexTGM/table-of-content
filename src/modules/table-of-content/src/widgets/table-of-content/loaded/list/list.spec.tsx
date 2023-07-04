@@ -1,7 +1,7 @@
 import { act, fireEvent } from "@testing-library/react";
 import { TableOfContentsList } from ".";
-import { renderWithProviders } from "../../../../shared";
 import { preloadedState } from "../../../../shared/tests/state-mock";
+import { renderWithProviders } from "../../../../shared/tests";
 
 describe("List should", () => {
   it("render all items when filters are empty", () => {

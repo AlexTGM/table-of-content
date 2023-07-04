@@ -7,8 +7,8 @@ import { fetch, Headers, Request, Response } from 'cross-fetch'
 import { KnowledgeBase } from ".";
 import { setupStore } from "../app/store";
 import { PageApi } from "../entities";
-import { renderWithProviders } from "../shared";
 import { waitFor } from "@testing-library/react";
+import { renderWithProviders } from "../shared/test.utils";
 
 global.fetch = fetch
 global.Headers = Headers

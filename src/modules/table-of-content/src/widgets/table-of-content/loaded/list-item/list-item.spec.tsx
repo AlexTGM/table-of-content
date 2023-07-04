@@ -1,8 +1,8 @@
 import { act, fireEvent } from "@testing-library/react";
 import { ListItem } from ".";
 import "jest-styled-components";
-import { renderWithProviders } from "../../../../shared";
 import { preloadedState } from "../../../../shared/tests/state-mock";
+import { renderWithProviders } from "../../../../shared/tests";
 
 describe("List Item should", () => {
   it("render", () => {

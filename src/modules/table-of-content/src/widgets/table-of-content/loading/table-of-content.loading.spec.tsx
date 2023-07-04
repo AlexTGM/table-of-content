@@ -1,5 +1,5 @@
 import { TableOfContentLoading } from "..";
-import { renderWithProviders } from "../../../shared";
+import { renderWithProviders } from "../../../shared/tests";
 
 describe("Table Of Content Loading should", () => {
   it("render exact 8 elements", () => {
