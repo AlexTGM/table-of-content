@@ -38,21 +38,16 @@ export const ListItem = React.memo(({ itemPath }: { itemPath: string }) => {
   const handleKeyDown = useKeyboardNavigation({ Enter: handleInteraction });
 
   return (
-    <li
-      key={itemId}
-      data-testid={`list-item-${itemId}`}
+    <InteractiveTableOfContentNode
+      tabIndex={2}
+      onKeyDown={handleKeyDown}
       onClick={handleInteraction}
+      $level={level + 1}
+      $highlightType={highlightType}
+      data-testid={`div-item-${itemId}`}
     >
-      <InteractiveTableOfContentNode
-        tabIndex={2}
-        onKeyDown={handleKeyDown}
-        $level={level + 1}
-        $highlightType={highlightType}
-        data-testid={`div-item-${itemId}`}
-      >
-        {isExpandable && <Expander isExpanded={isExpanded} />}
-        {title}
-      </InteractiveTableOfContentNode>
-    </li>
+      {isExpandable && <Expander isExpanded={isExpanded} />}
+      {title}
+    </InteractiveTableOfContentNode>
   );
 });

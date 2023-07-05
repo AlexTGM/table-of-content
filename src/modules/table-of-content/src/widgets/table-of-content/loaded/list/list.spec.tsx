@@ -9,10 +9,10 @@ describe("List should", () => {
       preloadedState,
     });
 
-    act(() => fireEvent.click(getByTestId("list-item-1")));
-    act(() => fireEvent.click(getByTestId("list-item-2")));
+    act(() => fireEvent.click(getByTestId("div-item-1")));
+    act(() => fireEvent.click(getByTestId("div-item-2")));
 
-    expect(getByTestId("list-item-3")).toBeVisible();
+    expect(getByTestId("div-item-3")).toBeVisible();
   });
 
   it("render items except filtered out", () => {
@@ -26,10 +26,10 @@ describe("List should", () => {
       }
     );
 
-    act(() => fireEvent.click(getByTestId("list-item-1")));
-    act(() => fireEvent.click(getByTestId("list-item-2")));
+    act(() => fireEvent.click(getByTestId("div-item-1")));
+    act(() => fireEvent.click(getByTestId("div-item-2")));
 
-    expect(queryByTestId("list-item-3")).toBeNull();
+    expect(queryByTestId("div-item-3")).toBeNull();
   });
 
   it('render no items text when list is empty', () => {
@@ -44,7 +44,7 @@ describe("List should", () => {
     );
 
     const matchingElements = queryAllByTestId((value) =>
-      value.startsWith("list-item")
+      value.startsWith("div-item")
     );
 
     expect(matchingElements.length).toBe(0);

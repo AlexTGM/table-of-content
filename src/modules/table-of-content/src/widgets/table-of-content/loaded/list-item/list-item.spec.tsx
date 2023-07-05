@@ -15,7 +15,7 @@ describe("List Item should", () => {
 
     expect(baseElement).toHaveTextContent("Item #1");
 
-    act(() => fireEvent.click(getByTestId("list-item-1")));
+    act(() => fireEvent.click(getByTestId("div-item-1")));
 
     expect(getByTestId("div-item-1")).not.toHaveStyleRule(
       "background-color",
