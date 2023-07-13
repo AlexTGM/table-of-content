@@ -1,17 +1,9 @@
-import { useCallback } from "react";
+import React, { useCallback } from "react";
+
 import { Expander } from "../../../../../../ui-kit";
 import { selectNodeData } from "../../../../entities";
-import {
-  useExpandableItem,
-  useSelectableItems,
-  usePathHighlighting,
-} from "../../../../features";
-import {
-  getNodeId,
-  useAppSelector,
-  InteractiveTableOfContentNode,
-} from "../../../../shared";
-import React from "react";
+import { useExpandableItem, useSelectableItems } from "../../../../features";
+import { getNodeId, InteractiveTableOfContentNode, useAppSelector } from "../../../../shared";
 
 const useKeyboardNavigation = (actions: Record<string, () => void>) => {
   return useCallback(
@@ -23,19 +15,23 @@ const useKeyboardNavigation = (actions: Record<string, () => void>) => {
 export const ListItem = React.memo(({ itemPath }: { itemPath: string }) => {
   const itemId = getNodeId(itemPath);
 
-  const { title, level } = useAppSelector((state: RootState) =>
-    selectNodeData(state, itemId)
-  );
+  const { title, level } = useAppSelector((state) => selectNodeData(state, itemId));
 
-  const highlightType = usePathHighlighting(itemPath);
-  const { isExpanded, isExpandable, handleExpand } = useExpandableItem(itemId);
-  const { handleSelect } = useSelectableItems(itemPath);
+  const {
+    isExpanded,
+    isExpandable,
+    handleToggle,
+  } = useExpandableItem(itemId);
+
+  const { highlightType, handleSelect } = useSelectableItems(itemPath);
 
   const handleInteraction = useCallback(() => {
-    return isExpandable ? handleExpand() : handleSelect();
-  }, [handleExpand, handleSelect, isExpandable]);
+    return isExpandable ? handleToggle() : handleSelect();
+  }, [handleSelect, handleToggle, isExpandable]);
 
-  const handleKeyDown = useKeyboardNavigation({ Enter: handleInteraction });
+  const handleKeyDown = useKeyboardNavigation({
+    Enter: handleInteraction,
+  });
 
   return (
     <InteractiveTableOfContentNode

@@ -7,6 +7,12 @@ export const ExpandableItemsSlice = createSlice({
     expanded: Record<string, boolean>;
   },
   reducers: {
+    expandItem: (state, { payload }: PayloadAction<string>) => {
+      state.expanded[payload] = true;
+    },
+    collapseItem: (state, { payload }: PayloadAction<string>) => {
+      state.expanded[payload] = false;
+    },
     toggleItem: (state, { payload }: PayloadAction<string>) => {
       state.expanded[payload] = !state.expanded[payload] ?? true;
     },

@@ -2,15 +2,20 @@ import { ExpandableItemsSlice, selectIsExpanded } from ".";
 import { useCallback, useMemo } from "react";
 import { selectNodeData } from "../../entities";
 import { useAppDispatch, useAppSelector } from "../../shared";
+import { createSelector } from "@reduxjs/toolkit";
+
+const selectIsNodeExpandable = createSelector(
+  selectNodeData,
+  (nodeData) => (nodeData.pages?.length ?? 0) > 0
+)
 
 export const useExpandableItem = (nodeId: string) => {
   const dispatch = useAppDispatch();
 
-  const { pages } = useAppSelector((state) => selectNodeData(state, nodeId));
   const isExpanded = useAppSelector((state) => selectIsExpanded(state, nodeId));
-  const isExpandable = useMemo(() => (pages?.length ?? 0) > 0, [pages]);
+  const isExpandable = useAppSelector((state) => selectIsNodeExpandable(state, nodeId));
 
-  const handleExpand = useCallback(() => {
+  const handleToggle = useCallback(() => {
     dispatch(ExpandableItemsSlice.actions.toggleItem(nodeId));
   }, [dispatch, nodeId]);
 
@@ -18,8 +23,8 @@ export const useExpandableItem = (nodeId: string) => {
     () => ({
       isExpandable,
       isExpanded,
-      handleExpand,
+      handleToggle,
     }),
-    [handleExpand, isExpandable, isExpanded]
+    [handleToggle, isExpandable, isExpanded]
   );
 };
