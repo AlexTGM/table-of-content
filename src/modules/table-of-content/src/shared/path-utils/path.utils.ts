@@ -10,7 +10,7 @@ export const getFirstNodeId = (path: string) => {
   return pathNodes[0];
 }
 
-export const getParentNodeId = (path: string) => {
+export const getParentNodeId = (path: string): string | undefined => {
   const pathNodes = getPathNodes(path);
 
   return pathNodes[pathNodes.length - 2];
