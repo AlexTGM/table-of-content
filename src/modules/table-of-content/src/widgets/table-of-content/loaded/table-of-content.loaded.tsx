@@ -1,28 +1,22 @@
-import { useEffect } from "react";
 import { TableOfContentsList } from "./list";
 import { useSelectedStateRestore } from "./use-selected-state-restore";
 import {
   TableOfContentProps,
   useTableOfContentInit,
-  selectSelectedItemPath,
   FilterInput,
+  selectFilterState,
+  useSelectedPathUpdate,
 } from "../../../features";
-import { useAppSelector, getNodeId } from "../../../shared";
-import React from "react";
-
-const useSelectedPathUpdate = (onSelect: (selectedPageId: string) => void) => {
-  const selectedPath = useAppSelector(selectSelectedItemPath);
-
-  useEffect(() => {
-    selectedPath && onSelect(getNodeId(selectedPath));
-  }, [onSelect, selectedPath]);
-}
+import React, {  } from "react";
+import { TableOfContentNode, useAppSelector } from "../../../shared";
 
 export const TableOfContentLoaded = React.memo(({
   inputData,
   selectedPageId,
   onSelect,
 }: TableOfContentProps) => {
+  const {filteredNodes} = useAppSelector(selectFilterState);
+
   useSelectedPathUpdate(onSelect);
   useTableOfContentInit(inputData);
   useSelectedStateRestore(selectedPageId);
@@ -30,7 +24,11 @@ export const TableOfContentLoaded = React.memo(({
   return (
     <>
       <FilterInput />
-      <TableOfContentsList />
+
+      {filteredNodes.length === 0
+        ? <TableOfContentNode>Please adjust filters</TableOfContentNode>
+        : <TableOfContentsList rootNodes={filteredNodes} />
+      }
     </>
   );
 });

@@ -1,4 +1,4 @@
-import { filter } from ".";
+import { filterData } from ".";
 import { Pages } from "../../entities";
 
 const node4 = { path: "4", children: [] };
@@ -26,20 +26,20 @@ const rootNodes = [node1, node2];
 describe("filter", () => {
   it("returns rootNodes when filterValue is empty", () => {
     const filterValue = "";
-    const filteredNodes = filter(rawData, rootNodes, filterValue);
+    const filteredNodes = filterData(filterValue, rootNodes, rawData);
     expect(filteredNodes).toEqual(rootNodes);
   });
 
   it("returns filtered nodes based on case-insensitive title matching", () => {
     const filterValue = "sub";
     const expectedFilteredNodes = [node2];
-    const filteredNodes = filter(rawData, rootNodes, filterValue);
+    const filteredNodes = filterData(filterValue, rootNodes, rawData);
     expect(filteredNodes).toEqual(expectedFilteredNodes);
   });
 
   it("returns empty array when no nodes match the filter value", () => {
     const filterValue = "non-existent";
-    const filteredNodes = filter(rawData, rootNodes, filterValue);
+    const filteredNodes = filterData(filterValue, rootNodes, rawData);
     expect(filteredNodes).toEqual([]);
   });
 });

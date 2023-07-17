@@ -6,9 +6,9 @@ import { useExpandableItem, useSelectableItems } from "../../../../features";
 import { getNodeId, InteractiveTableOfContentNode, useAppSelector } from "../../../../shared";
 
 interface ListItemProps {
-  innerRef: React.RefObject<HTMLDivElement> | null,
+  innerRef?: React.RefObject<HTMLDivElement> | null,
   itemPath: string,
-  handleKeyDown: (e: React.KeyboardEvent<HTMLDivElement>, nodePath: string) => void,
+  handleKeyDown?: (e: React.KeyboardEvent<HTMLDivElement>, nodePath: string) => void,
 }
 
 export const ListItem = React.memo(({ innerRef, itemPath, handleKeyDown }: ListItemProps) => {
@@ -29,7 +29,7 @@ export const ListItem = React.memo(({ innerRef, itemPath, handleKeyDown }: ListI
   }, [handleSelect, handleToggle, isExpandable]);
 
   const handleKeyDownInternal = useCallback((e: React.KeyboardEvent<HTMLDivElement>) => {
-    e.key === 'Enter' ? handleInteraction() : handleKeyDown(e, itemPath);
+    e.key === 'Enter' ? handleInteraction() : handleKeyDown?.(e, itemPath);
   }, [handleInteraction, handleKeyDown, itemPath]);
 
   return (

@@ -1,30 +1,39 @@
-import React from "react";
-import { useState, useCallback, useEffect } from "react";
-import { useAppDispatch, useDebounce } from "../../shared";
-import { FilterItemsSlice } from "./filter-items.slice";
+import React, { useTransition, useCallback, useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "../../shared";
 import { FilterWrapper, StyledInput } from "../../../../ui-kit";
+import { selectTreeState } from "../../entities";
+import { FilterItemsSlice, filterData, selectFilterValue } from ".";
 
-export const FilterInput = React.memo(() => {
+export const FilterInput = React.memo((): JSX.Element => {
   const dispatch = useAppDispatch();
 
-  const [inputValue, setInputValue] = useState<string>("");
-  const debouncedFilter = useDebounce(inputValue, 300);
+  const [, startTransition] = useTransition();
 
-  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
-  }, []);
+  const filterValue = useAppSelector(selectFilterValue);
+  const { rawData, nodes } = useAppSelector(selectTreeState);
 
   useEffect(() => {
-    dispatch(FilterItemsSlice.actions.setFilterValue(debouncedFilter));
-  }, [debouncedFilter, dispatch]);
+    dispatch(FilterItemsSlice.actions.setFilteredValues(nodes));
+  }, [dispatch, nodes])
+
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(FilterItemsSlice.actions.setFilterValue(e.target.value))
+
+    startTransition(() => {
+      const filteredData = filterData(e.target.value, nodes, rawData);
+
+      dispatch(FilterItemsSlice.actions.setFilteredValues(filteredData));
+    })
+  }, [dispatch, nodes, rawData])
 
   return (
     <FilterWrapper>
       <StyledInput
         tabIndex={1}
-        value={inputValue}
+        value={filterValue}
         placeholder="Search Table of Contents..."
         onChange={handleChange}
+        data-testid="table-of-content-input"
       />
     </FilterWrapper>
   );

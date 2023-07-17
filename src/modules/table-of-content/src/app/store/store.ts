@@ -13,7 +13,6 @@ const rootReducer = combineReducers({
   [ExpandableItemsSlice.name]: ExpandableItemsSlice.reducer,
   [SelectableItemsSlice.name]: SelectableItemsSlice.reducer,
   [FilterItemsSlice.name]: FilterItemsSlice.reducer,
-  [SelectableItemsSlice.name]: SelectableItemsSlice.reducer,
 });
 
 export function setupStore(preloadedState?: PreloadedState<RootState>) {

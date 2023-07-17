@@ -1,15 +1,15 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { ExpandableItemsSlice, selectExpandedState, useFilterItems } from "../../../../features";
-import { TableOfContentNode, VirtualList, getNodeId, getParentNodeId, getPathNodes, useAppDispatch, useAppSelector } from "../../../../shared";
+import { ExpandableItemsSlice, selectExpandedState } from "../../../../features";
+import { VirtualList, getNodeId, getParentNodeId, getPathNodes, useAppDispatch, useAppSelector } from "../../../../shared";
 import { ListItem, useListItems } from "../list-item";
-import { selectTreeState } from "../../../../entities";
+import { TreeNode, selectTreeState } from "../../../../entities";
 
 const useKeyboardNavigation = (listItems: string[]) => {
   const dispatch = useAppDispatch();
 
-  const [currentItemPath, setCurrentItemPath] = useState('')
+  const [currentItemPath, setCurrentItemPath] = useState('');
 
-  const {rawData} = useAppSelector(selectTreeState);
+  const { rawData } = useAppSelector(selectTreeState);
   const expandedState = useAppSelector(selectExpandedState);
 
   const handleKeyDown = useCallback((e: React.KeyboardEvent<HTMLDivElement>, path: string) => {
@@ -51,17 +51,21 @@ const useKeyboardNavigation = (listItems: string[]) => {
         setCurrentItemPath(listItems[index - 1]);
       }
     }
-  }, [dispatch, expandedState, listItems, rawData])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return useMemo(() => ({
     handleKeyDown, currentItemPath
   }), [currentItemPath, handleKeyDown])
 }
 
-export const TableOfContentsList = () => {
+interface TableOfContentsListProps {
+  rootNodes: TreeNode[],
+}
+
+export const TableOfContentsList = ({ rootNodes }: TableOfContentsListProps) => {
   const currentItemRef = useRef<HTMLDivElement>(null);
 
-  const rootNodes = useFilterItems();
   const listItems = useListItems(rootNodes);
 
   const { currentItemPath, handleKeyDown } = useKeyboardNavigation(listItems);
@@ -70,15 +74,11 @@ export const TableOfContentsList = () => {
     currentItemRef.current?.focus?.();
   }, [currentItemPath])
 
-  return listItems.length === 0 ? (
-    <TableOfContentNode>Please adjust filters</TableOfContentNode>
-  ) : (
-    <VirtualList itemsCount={listItems.length}>
-      {({ itemIndex }) => <ListItem
-        innerRef={listItems[itemIndex] === currentItemPath ? currentItemRef : null}
-        itemPath={listItems[itemIndex]}
-        handleKeyDown={handleKeyDown}
-      />}
-    </VirtualList>
-  );
+  return <VirtualList itemsCount={listItems.length}>
+    {({ itemIndex }) => <ListItem
+      innerRef={listItems[itemIndex] === currentItemPath ? currentItemRef : null}
+      itemPath={listItems[itemIndex]}
+      handleKeyDown={handleKeyDown}
+    />}
+  </VirtualList>
 };

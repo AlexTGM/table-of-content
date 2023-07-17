@@ -1,18 +1,7 @@
-import { createSelector } from "@reduxjs/toolkit";
-import {
-  Pages,
-  TreeNode,
-  selectRawData,
-  selectRootNodes,
-} from "../../entities";
-import { getNodeId, useAppSelector } from "../../shared";
-import { selectFilterValue } from "./filter-items.slice";
+import { Pages, TreeNode } from "../../entities";
+import { getNodeId } from "../../shared";
 
-export const filter = (
-  rawData: Pages,
-  rootNodes: TreeNode[],
-  filterValue: string
-) => {
+export const filterData = (filterValue: string, rootNodes: TreeNode[], rawData: Pages): TreeNode[] => {
   const getNodes = (result: TreeNode[], node: TreeNode): TreeNode[] => {
     const nodeId = getNodeId(node.path);
 
@@ -33,11 +22,4 @@ export const filter = (
   };
 
   return filterValue === "" ? rootNodes : rootNodes.reduce(getNodes, []);
-};
-
-export const selectFiltered = createSelector(
-  [selectRawData, selectRootNodes, selectFilterValue],
-  filter
-);
-
-export const useFilterItems = () => useAppSelector(selectFiltered);
+}
