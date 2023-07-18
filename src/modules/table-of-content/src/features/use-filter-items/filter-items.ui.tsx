@@ -4,7 +4,7 @@ import { FilterWrapper, StyledInput } from "../../../../ui-kit";
 import { selectTreeState } from "../../entities";
 import { FilterItemsSlice, filterData, selectFilterValue } from ".";
 
-export const FilterInput = React.memo((): JSX.Element => {
+export const FilterInput = (): JSX.Element => {
   const dispatch = useAppDispatch();
 
   const [, startTransition] = useTransition();
@@ -37,4 +37,4 @@ export const FilterInput = React.memo((): JSX.Element => {
       />
     </FilterWrapper>
   );
-});
+};
