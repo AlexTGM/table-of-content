@@ -1,11 +1,13 @@
 import { useEffect } from "react";
 import { selectRawData } from "../../../entities";
-import { ExpandableItemsSlice, SelectableItemsSlice } from "../../../features";
+import { ExpandableItemsSlice, SelectableItemsSlice, selectSelectedItemPath } from "../../../features";
 import { useAppDispatch, useAppSelector, joinPath } from "../../../shared";
 
 export const useSelectedStateRestore = (selectedPageId: string | null) => {
   const dispatch = useAppDispatch();
   const rawData = useAppSelector(selectRawData);
+
+  const selectedPath = useAppSelector(selectSelectedItemPath);
 
   useEffect(() => {
     if (selectedPageId === null || Object.keys(rawData).length === 0) return;
@@ -22,7 +24,9 @@ export const useSelectedStateRestore = (selectedPageId: string | null) => {
 
     const path = joinPath(nodes);
 
-    dispatch(ExpandableItemsSlice.actions.expandToPath(path));
-    dispatch(SelectableItemsSlice.actions.setSelectedPath(path));
+    if (selectedPath !== path) {
+      dispatch(ExpandableItemsSlice.actions.expandToPath(path));
+      dispatch(SelectableItemsSlice.actions.setSelectedPath(path));
+    }
   }, [dispatch, rawData, selectedPageId]);
 };

@@ -28,5 +28,10 @@ export const selectFilterState = (state: RootState) => state.filterState;
 
 export const selectFilterValue = createSelector(
   selectFilterState,
-  (state) => state.filterValue
+  (state) => state.filterValue,
 );
+
+export const selectFilteredNodes = createSelector(
+  selectFilterState,
+  (state) => state.filteredNodes,
+)

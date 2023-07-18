@@ -4,8 +4,8 @@ import {
   TableOfContentProps,
   useTableOfContentInit,
   FilterInput,
-  selectFilterState,
   useSelectedPathUpdate,
+  selectFilteredNodes,
 } from "../../../features";
 import React, {  } from "react";
 import { TableOfContentNode, useAppSelector } from "../../../shared";
@@ -15,7 +15,7 @@ export const TableOfContentLoaded = React.memo(({
   selectedPageId,
   onSelect,
 }: TableOfContentProps) => {
-  const {filteredNodes} = useAppSelector(selectFilterState);
+  const filteredNodes = useAppSelector(selectFilteredNodes);
 
   useSelectedPathUpdate(onSelect);
   useTableOfContentInit(inputData);
