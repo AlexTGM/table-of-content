@@ -1,4 +1,4 @@
-import React, { useCallback, RefObject } from "react";
+import { useCallback, RefObject, memo, KeyboardEvent } from "react";
 
 import { Expander } from "../../../../../../ui-kit";
 import { selectNodeData } from "../../../../entities";
@@ -12,7 +12,7 @@ interface ListItemProps {
   updateCurrentItemIndex: (index: number) => void;
 }
 
-export const ListItem = React.memo(({ index, innerRef, itemPath, updateCurrentItemIndex }: ListItemProps) => {
+export const ListItem = memo(({ index, innerRef, itemPath, updateCurrentItemIndex }: ListItemProps) => {
   const itemId = getNodeId(itemPath);
 
   const { title, level } = useAppSelector((state) => selectNodeData(state, itemId));
@@ -31,7 +31,7 @@ export const ListItem = React.memo(({ index, innerRef, itemPath, updateCurrentIt
     return isExpandable ? handleToggle() : handleSelect();
   }, [handleSelect, handleToggle, index, isExpandable, updateCurrentItemIndex]);
 
-  const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
+  const handleKeyDown = useCallback((e: KeyboardEvent) => {
     if (e.key === 'Enter') {
       handleInteraction();
     }

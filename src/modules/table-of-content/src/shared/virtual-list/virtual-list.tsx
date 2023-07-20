@@ -15,7 +15,7 @@ interface VirtualListProps {
   children: (props: ChildProps) => ReactNode;
 }
 
-export const VirtualList = memo(({ itemsCount, configuration, children }: VirtualListProps) => {
+export const VirtualList = ({ itemsCount, configuration, children }: VirtualListProps) => {
   const currentItemRef = useRef<HTMLDivElement>(null);
 
   const { currentItemIndex, updateCurrentItemIndex, handleKeyDown } = useFocusRing(itemsCount, configuration);
@@ -46,7 +46,7 @@ export const VirtualList = memo(({ itemsCount, configuration, children }: Virtua
       </ListWrapper>
     </ParentContainer>
   );
-});
+};
 
 const ParentContainer = styled.div`
   overflow-y: auto;
