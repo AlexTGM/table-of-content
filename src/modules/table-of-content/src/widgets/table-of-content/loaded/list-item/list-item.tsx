@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, RefObject } from "react";
 
 import { Expander } from "../../../../../../ui-kit";
 import { selectNodeData } from "../../../../entities";
@@ -6,12 +6,11 @@ import { useExpandableItem, useSelectableItems } from "../../../../features";
 import { getNodeId, InteractiveTableOfContentNode, useAppSelector } from "../../../../shared";
 
 interface ListItemProps {
-  innerRef?: React.RefObject<HTMLDivElement> | null,
-  itemPath: string,
-  handleKeyDown?: (e: React.KeyboardEvent<HTMLDivElement>, nodePath: string) => void,
+  itemPath: string;
+  innerRef: RefObject<HTMLDivElement> | null;
 }
 
-export const ListItem = React.memo(({ innerRef, itemPath, handleKeyDown }: ListItemProps) => {
+export const ListItem = React.memo(({ innerRef, itemPath }: ListItemProps) => {
   const itemId = getNodeId(itemPath);
 
   const { title, level } = useAppSelector((state) => selectNodeData(state, itemId));
@@ -28,17 +27,18 @@ export const ListItem = React.memo(({ innerRef, itemPath, handleKeyDown }: ListI
     return isExpandable ? handleToggle() : handleSelect();
   }, [handleSelect, handleToggle, isExpandable]);
 
-  const handleKeyDownInternal = useCallback((e: React.KeyboardEvent<HTMLDivElement>) => {
-    e.key === 'Enter' ? handleInteraction() : handleKeyDown?.(e, itemPath);
-  }, [handleInteraction, handleKeyDown, itemPath]);
+  const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      handleInteraction();
+    }
+  }, [handleInteraction]);
 
   return (
     <InteractiveTableOfContentNode
       ref={innerRef}
-
-      tabIndex={2}
-      onKeyDown={handleKeyDownInternal}
+      tabIndex={innerRef ? 0 : undefined}
       onClick={handleInteraction}
+      onKeyDown={handleKeyDown}
       $level={level + 1}
       $highlightType={highlightType}
       data-testid={`div-item-${itemId}`}
