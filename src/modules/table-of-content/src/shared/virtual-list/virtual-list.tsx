@@ -1,4 +1,4 @@
-import { ReactNode, memo, useEffect, useRef } from "react";
+import { ReactNode, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { useFocusRing } from "./use-focus-ring";
 import { useVirtualList } from "./use-virtual-list";

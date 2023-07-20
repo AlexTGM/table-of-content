@@ -26,11 +26,11 @@ export const useFocusRing = (
   }, []);
 
   const handleKeyDown = useCallback((e: React.KeyboardEvent<HTMLDivElement>) => {
-    e.preventDefault();
-
     if (e.key === 'ArrowDown') {
+      e.preventDefault();
       updateCurrentItemIndex(currentItemIndex + 1);
     } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
       updateCurrentItemIndex(currentItemIndex - 1);
     }
 
