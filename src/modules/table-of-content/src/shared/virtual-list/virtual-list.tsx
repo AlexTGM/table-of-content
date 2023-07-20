@@ -1,11 +1,12 @@
-import { useVirtualizer } from "@tanstack/react-virtual";
-import React from "react";
-import { ReactNode, useEffect, useMemo, useRef, useState } from "react";
+import { ReactNode, memo, useEffect, useRef } from "react";
 import styled from "styled-components";
+import { useFocusRing } from "./use-focus-ring";
+import { useVirtualList } from "./use-virtual-list";
 
 interface ChildProps {
   itemIndex: number;
   innerRef: React.RefObject<HTMLDivElement> | null;
+  updateCurrentItemIndex: (index: number) => void;
 }
 
 interface VirtualListProps {
@@ -14,48 +15,19 @@ interface VirtualListProps {
   children: (props: ChildProps) => ReactNode;
 }
 
-const useKeyboardNavigation = (configuration: Record<string, (index: number) => number | void>) => {
-  const [currentItemIndex, setCurrentIndex] = useState(0);
-
-  return useMemo(() => ({
-    handleKeyDown: (e: React.KeyboardEvent<HTMLDivElement>) => {
-      if (e.key === 'ArrowDown') {
-        setCurrentIndex(currentItemIndex + 1);
-      } else if (e.key === 'ArrowUp') {
-        setCurrentIndex(currentItemIndex - 1);
-      }
-
-      const newIndex = configuration[e.key]?.(currentItemIndex);
-
-      newIndex && setCurrentIndex(newIndex);
-    }, currentItemIndex
-  }), [configuration, currentItemIndex])
-}
-
-export const VirtualList = React.memo(({ itemsCount, configuration, children }: VirtualListProps) => {
-  const parentRef = useRef<HTMLDivElement>(null);
-
+export const VirtualList = memo(({ itemsCount, configuration, children }: VirtualListProps) => {
   const currentItemRef = useRef<HTMLDivElement>(null);
 
-  const virtualizer = useVirtualizer({
-    count: itemsCount,
-    getScrollElement: () => parentRef.current,
-    estimateSize: () => 40,
-    overscan: 5,
-  });
-
-  const items = virtualizer.getVirtualItems();
-
-  const { currentItemIndex, handleKeyDown } = useKeyboardNavigation(configuration);
+  const { currentItemIndex, updateCurrentItemIndex, handleKeyDown } = useFocusRing(itemsCount, configuration);
+  const { virtualizer, parentRef, items } = useVirtualList(itemsCount, currentItemIndex);
 
   useEffect(() => {
-    virtualizer.scrollToIndex(currentItemIndex, { align: 'center', behavior: 'smooth' });
     currentItemRef.current?.focus();
-  }, [currentItemIndex, virtualizer])
+  }, [currentItemIndex])
 
   return (
     <ParentContainer ref={parentRef} tabIndex={1} onKeyDown={handleKeyDown}>
-      <ListWrapper style={{ height: `${virtualizer.getTotalSize()}px`}}>
+      <ListWrapper style={{ height: `${virtualizer.getTotalSize()}px` }}>
         <List style={{ transform: `translateY(${items[0].start}px)` }}>
           {items.map((virtualRow) => (
             <li
@@ -64,8 +36,9 @@ export const VirtualList = React.memo(({ itemsCount, configuration, children }: 
               ref={virtualizer.measureElement}
             >
               {children({
+                updateCurrentItemIndex,
                 itemIndex: virtualRow.index,
-                innerRef: currentItemIndex === virtualRow.index ? currentItemRef : null
+                innerRef: currentItemIndex === virtualRow.index ? currentItemRef : null,
               })}
             </li>
           ))}

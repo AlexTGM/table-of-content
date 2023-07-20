@@ -6,11 +6,13 @@ import { useExpandableItem, useSelectableItems } from "../../../../features";
 import { getNodeId, InteractiveTableOfContentNode, useAppSelector } from "../../../../shared";
 
 interface ListItemProps {
+  index: number,
   itemPath: string;
   innerRef: RefObject<HTMLDivElement> | null;
+  updateCurrentItemIndex: (index: number) => void;
 }
 
-export const ListItem = React.memo(({ innerRef, itemPath }: ListItemProps) => {
+export const ListItem = React.memo(({ index, innerRef, itemPath, updateCurrentItemIndex }: ListItemProps) => {
   const itemId = getNodeId(itemPath);
 
   const { title, level } = useAppSelector((state) => selectNodeData(state, itemId));
@@ -24,8 +26,10 @@ export const ListItem = React.memo(({ innerRef, itemPath }: ListItemProps) => {
   const { highlightType, handleSelect } = useSelectableItems(itemPath);
 
   const handleInteraction = useCallback(() => {
+    updateCurrentItemIndex(index);
+
     return isExpandable ? handleToggle() : handleSelect();
-  }, [handleSelect, handleToggle, isExpandable]);
+  }, [handleSelect, handleToggle, index, isExpandable, updateCurrentItemIndex]);
 
   const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {

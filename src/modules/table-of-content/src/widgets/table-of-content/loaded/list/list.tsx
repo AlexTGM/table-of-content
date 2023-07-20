@@ -49,9 +49,10 @@ export const TableOfContentsList = ({ rootNodes }: TableOfContentsListProps) => 
   }), [dispatch, expandState, listItems, rawData]);
 
   return <VirtualList itemsCount={listItems.length} configuration={configuration}>
-    {({ itemIndex, innerRef }) => <ListItem
+    {({ itemIndex, innerRef, updateCurrentItemIndex }) => <ListItem
+      index={itemIndex}
       innerRef={innerRef}
       itemPath={listItems[itemIndex]}
-    />}
+      updateCurrentItemIndex={updateCurrentItemIndex} />}
   </VirtualList>
 };
