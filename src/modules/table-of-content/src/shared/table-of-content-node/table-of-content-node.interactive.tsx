@@ -10,7 +10,7 @@ export const InteractiveTableOfContentNode = styled(TableOfContentNode)`
   }
 
   &:focus {
+    outline-offset: -1px;
     outline-color: #307fff;
-    z-index: 2;
   }
 `;
