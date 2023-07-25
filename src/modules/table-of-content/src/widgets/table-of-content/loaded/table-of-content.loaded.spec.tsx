@@ -29,7 +29,7 @@ describe("Table Of Content Loaded should", () => {
           level: 0,
           title: "Item #2",
           pages: [],
-        }
+        },
       },
     },
     topLevelIds: ["1", "2", "3"],
@@ -48,7 +48,7 @@ describe("Table Of Content Loaded should", () => {
     expect(baseElement).toHaveTextContent("Item #3");
     expect(baseElement).toHaveTextContent("Item #4");
 
-    expect(baseElement).not.toHaveTextContent('Item #2');
+    expect(baseElement).not.toHaveTextContent("Item #2");
   });
 
   it("render more items on expand", () => {
@@ -60,16 +60,17 @@ describe("Table Of Content Loaded should", () => {
       />
     );
 
-    expect(baseElement).not.toHaveTextContent('Item #2');
+    expect(baseElement).not.toHaveTextContent("Item #2");
 
     const expandableItem = getByText("Item #3");
 
     fireEvent.click(expandableItem);
 
     expect(baseElement).toHaveTextContent("Item #1");
-    expect(baseElement).toHaveTextContent('Item #2');
+    expect(baseElement).toHaveTextContent("Item #2");
     expect(baseElement).toHaveTextContent("Item #3");
-  })
+    expect(baseElement).toHaveTextContent("Item #4");
+  });
 
   it("render no data on incorrect filter", () => {
     const { baseElement, getByTestId } = renderWithProviders(
@@ -82,14 +83,14 @@ describe("Table Of Content Loaded should", () => {
 
     const filterInput = getByTestId("table-of-content-input");
 
-    fireEvent.change(filterInput, { target: { value: "not-existing-string" } })
+    fireEvent.change(filterInput, { target: { value: "not-existing-string" } });
 
     expect(baseElement).toHaveTextContent("Please adjust filters");
 
-    expect(baseElement).not.toHaveTextContent('Item #1')
-    expect(baseElement).not.toHaveTextContent('Item #2')
-    expect(baseElement).not.toHaveTextContent('Item #3')
-    expect(baseElement).not.toHaveTextContent('Item #4')
+    expect(baseElement).not.toHaveTextContent("Item #1");
+    expect(baseElement).not.toHaveTextContent("Item #2");
+    expect(baseElement).not.toHaveTextContent("Item #3");
+    expect(baseElement).not.toHaveTextContent("Item #4");
   });
 
   it("render items except filtered out", () => {
@@ -103,12 +104,12 @@ describe("Table Of Content Loaded should", () => {
 
     const filterInput = getByTestId("table-of-content-input");
 
-    fireEvent.change(filterInput, { target: { value: "Item #2" } })
+    fireEvent.change(filterInput, { target: { value: "Item #2" } });
 
-    expect(baseElement).not.toHaveTextContent('Item #1')
-    expect(baseElement).not.toHaveTextContent('Item #2')
-    expect(baseElement).toHaveTextContent('Item #3')
-    expect(baseElement).not.toHaveTextContent('Item #4')
+    expect(baseElement).not.toHaveTextContent("Item #1");
+    expect(baseElement).not.toHaveTextContent("Item #2");
+    expect(baseElement).toHaveTextContent("Item #3");
+    expect(baseElement).not.toHaveTextContent("Item #4");
   });
 
   it("render list expanded to selected item", () => {
@@ -120,8 +121,9 @@ describe("Table Of Content Loaded should", () => {
       />
     );
 
-    expect(baseElement).toHaveTextContent('Item #1')
-    expect(baseElement).toHaveTextContent('Item #2')
-    expect(baseElement).toHaveTextContent('Item #3')
-  })
+    expect(baseElement).toHaveTextContent("Item #1");
+    expect(baseElement).toHaveTextContent("Item #2");
+    expect(baseElement).toHaveTextContent("Item #3");
+    expect(baseElement).toHaveTextContent("Item #4");
+  });
 });
