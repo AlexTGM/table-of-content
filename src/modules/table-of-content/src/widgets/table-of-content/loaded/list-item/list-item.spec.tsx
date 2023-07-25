@@ -9,7 +9,12 @@ describe("List Item should", () => {
 
   it("render", () => {
     const { baseElement, getByTestId } = renderWithProviders(
-      <ListItem index={1} itemPath="1" innerRef={null} updateCurrentItemIndex={updateCurrentItemIndex}/>,
+      <ListItem
+        index={1}
+        itemPath="1"
+        innerRef={null}
+        updateCurrentItemIndex={updateCurrentItemIndex}
+      />,
       {
         preloadedState,
       }
@@ -31,7 +36,12 @@ describe("List Item should", () => {
     ["3", "8px 0 8px 48px"],
   ])("have indentation - itemPath: %s", (itemPath, expectedPadding) => {
     const { getByTestId } = renderWithProviders(
-      <ListItem index={1} itemPath={itemPath} innerRef={null} updateCurrentItemIndex={updateCurrentItemIndex}/>,
+      <ListItem
+        index={1}
+        itemPath={itemPath}
+        innerRef={null}
+        updateCurrentItemIndex={updateCurrentItemIndex}
+      />,
       {
         preloadedState,
       }
@@ -45,10 +55,16 @@ describe("List Item should", () => {
 
   it("highlight on selection", () => {
     const { getByTestId } = renderWithProviders(
-      <ListItem index={3} itemPath="3" innerRef={null}  updateCurrentItemIndex={updateCurrentItemIndex}/>,
+      <ListItem
+        index={3}
+        itemPath="3"
+        innerRef={null}
+        updateCurrentItemIndex={updateCurrentItemIndex}
+      />,
       {
         preloadedState,
-      });
+      }
+    );
 
     act(() => fireEvent.click(getByTestId("div-item-3")));
 
@@ -66,7 +82,12 @@ describe("List Item should", () => {
     "highlight path - itemPath: %s",
     (itemPath, expectedBackgroundColor, path) => {
       const { getByTestId } = renderWithProviders(
-        <ListItem index={1} itemPath={itemPath} innerRef={null} updateCurrentItemIndex={updateCurrentItemIndex} />,
+        <ListItem
+          index={1}
+          itemPath={itemPath}
+          innerRef={null}
+          updateCurrentItemIndex={updateCurrentItemIndex}
+        />,
         {
           preloadedState: { ...preloadedState, selectedState: { path } },
         }

@@ -3,7 +3,7 @@ import { render } from "@testing-library/react";
 import type { RenderOptions } from "@testing-library/react";
 import type { PreloadedState } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
-import ResizeObserver from 'resize-observer-polyfill';
+import ResizeObserver from "resize-observer-polyfill";
 
 import { setupStore } from "../../app/store";
 import type { AppStore, RootState } from "../../app/store";
@@ -29,4 +29,4 @@ export function renderWithProviders(
   return { store, ...render(ui, { wrapper: Wrapper, ...renderOptions }) };
 }
 
-global.ResizeObserver = ResizeObserver
+global.ResizeObserver = ResizeObserver;

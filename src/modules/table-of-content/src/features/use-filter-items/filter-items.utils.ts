@@ -1,7 +1,11 @@
 import { Pages, TreeNode } from "../../entities";
 import { getNodeId } from "../../shared";
 
-export const filterData = (filterValue: string, rootNodes: TreeNode[], rawData: Pages): TreeNode[] => {
+export const filterData = (
+  filterValue: string,
+  rootNodes: TreeNode[],
+  rawData: Pages
+): TreeNode[] => {
   const getNodes = (result: TreeNode[], node: TreeNode): TreeNode[] => {
     const nodeId = getNodeId(node.path);
 
@@ -22,4 +26,4 @@ export const filterData = (filterValue: string, rootNodes: TreeNode[], rawData: 
   };
 
   return filterValue === "" ? rootNodes : rootNodes.reduce(getNodes, []);
-}
+};

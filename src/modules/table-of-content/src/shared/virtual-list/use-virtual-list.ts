@@ -1,7 +1,10 @@
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { useRef, useEffect } from "react";
 
-export const useVirtualList = (itemsCount: number, currentItemIndex: number) => {
+export const useVirtualList = (
+  itemsCount: number,
+  currentItemIndex: number
+) => {
   const parentRef = useRef<HTMLDivElement>(null);
 
   const virtualizer = useVirtualizer({
@@ -18,4 +21,4 @@ export const useVirtualList = (itemsCount: number, currentItemIndex: number) => 
   }, [currentItemIndex, virtualizer]);
 
   return { parentRef, items, virtualizer };
-}
+};

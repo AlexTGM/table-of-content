@@ -7,28 +7,27 @@ import {
   useSelectedPathUpdate,
   selectFilteredNodes,
 } from "../../../features";
-import React, {  } from "react";
+import React from "react";
 import { TableOfContentNode, useAppSelector } from "../../../shared";
 
-export const TableOfContentLoaded = React.memo(({
-  inputData,
-  selectedPageId,
-  onSelect,
-}: TableOfContentProps) => {
-  const filteredNodes = useAppSelector(selectFilteredNodes);
+export const TableOfContentLoaded = React.memo(
+  ({ inputData, selectedPageId, onSelect }: TableOfContentProps) => {
+    const filteredNodes = useAppSelector(selectFilteredNodes);
 
-  useSelectedPathUpdate(onSelect);
-  useTableOfContentInit(inputData);
-  useSelectedStateRestore(selectedPageId);
+    useSelectedPathUpdate(onSelect);
+    useTableOfContentInit(inputData);
+    useSelectedStateRestore(selectedPageId);
 
-  return (
-    <>
-      <FilterInput />
+    return (
+      <>
+        <FilterInput />
 
-      {filteredNodes.length === 0
-        ? <TableOfContentNode>Please adjust filters</TableOfContentNode>
-        : <TableOfContentsList rootNodes={filteredNodes} />
-      }
-    </>
-  );
-});
+        {filteredNodes.length === 0 ? (
+          <TableOfContentNode>Please adjust filters</TableOfContentNode>
+        ) : (
+          <TableOfContentsList rootNodes={filteredNodes} />
+        )}
+      </>
+    );
+  }
+);

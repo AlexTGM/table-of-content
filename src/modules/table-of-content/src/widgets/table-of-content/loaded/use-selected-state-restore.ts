@@ -1,6 +1,10 @@
 import { useEffect } from "react";
 import { selectRawData } from "../../../entities";
-import { ExpandableItemsSlice, SelectableItemsSlice, selectSelectedItemPath } from "../../../features";
+import {
+  ExpandableItemsSlice,
+  SelectableItemsSlice,
+  selectSelectedItemPath,
+} from "../../../features";
 import { useAppDispatch, useAppSelector, joinPath } from "../../../shared";
 
 export const useSelectedStateRestore = (selectedPageId: string | null) => {
@@ -28,5 +32,6 @@ export const useSelectedStateRestore = (selectedPageId: string | null) => {
       dispatch(ExpandableItemsSlice.actions.expandToPath(path));
       dispatch(SelectableItemsSlice.actions.setSelectedPath(path));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, rawData, selectedPageId]);
 };

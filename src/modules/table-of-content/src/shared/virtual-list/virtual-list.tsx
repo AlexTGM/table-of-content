@@ -11,19 +11,27 @@ interface ChildProps {
 
 interface VirtualListProps {
   itemsCount: number;
-  configuration: Record<string, (index: number) => number | undefined>
+  configuration: Record<string, (index: number) => number | undefined>;
   children: (props: ChildProps) => ReactNode;
 }
 
-export const VirtualList = ({ itemsCount, configuration, children }: VirtualListProps) => {
+export const VirtualList = ({
+  itemsCount,
+  configuration,
+  children,
+}: VirtualListProps) => {
   const currentItemRef = useRef<HTMLDivElement>(null);
 
-  const { currentItemIndex, updateCurrentItemIndex, handleKeyDown } = useFocusRing(itemsCount, configuration);
-  const { virtualizer, parentRef, items } = useVirtualList(itemsCount, currentItemIndex);
+  const { currentItemIndex, updateCurrentItemIndex, handleKeyDown } =
+    useFocusRing(itemsCount, configuration);
+  const { virtualizer, parentRef, items } = useVirtualList(
+    itemsCount,
+    currentItemIndex
+  );
 
   useEffect(() => {
     currentItemRef.current?.focus();
-  }, [currentItemIndex])
+  }, [currentItemIndex]);
 
   return (
     <ParentContainer ref={parentRef} tabIndex={1} onKeyDown={handleKeyDown}>
@@ -38,7 +46,8 @@ export const VirtualList = ({ itemsCount, configuration, children }: VirtualList
               {children({
                 updateCurrentItemIndex,
                 itemIndex: virtualRow.index,
-                innerRef: currentItemIndex === virtualRow.index ? currentItemRef : null,
+                innerRef:
+                  currentItemIndex === virtualRow.index ? currentItemRef : null,
               })}
             </li>
           ))}

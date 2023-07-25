@@ -14,17 +14,20 @@ export const FilterInput = (): JSX.Element => {
 
   useEffect(() => {
     dispatch(FilterItemsSlice.actions.setFilteredValues(nodes));
-  }, [dispatch, nodes])
+  }, [dispatch, nodes]);
 
-  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(FilterItemsSlice.actions.setFilterValue(e.target.value))
+  const handleChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      dispatch(FilterItemsSlice.actions.setFilterValue(e.target.value));
 
-    startTransition(() => {
-      const filteredData = filterData(e.target.value, nodes, rawData);
+      startTransition(() => {
+        const filteredData = filterData(e.target.value, nodes, rawData);
 
-      dispatch(FilterItemsSlice.actions.setFilteredValues(filteredData));
-    })
-  }, [dispatch, nodes, rawData])
+        dispatch(FilterItemsSlice.actions.setFilteredValues(filteredData));
+      });
+    },
+    [dispatch, nodes, rawData]
+  );
 
   return (
     <FilterWrapper>
